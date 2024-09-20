@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV != "production"){
+if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
 
@@ -24,9 +24,9 @@ const userRouter = require("../MAJORPROJECT/routes/user.js");
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const dbUrl = process.env.ATLASDB_URL;
 
-main().then(() =>{
+main().then(() => {
     console.log("conected to DB");
-}).catch((err)  => {
+}).catch((err) => {
     console.log(err);
 });
 
@@ -43,8 +43,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
-    crypto:{
-        secret:process.env.SECRET,
+    crypto: {
+        secret: process.env.SECRET,
     },
     touchAfter: 24 * 3600,
 });
@@ -79,7 +79,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
- 
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -87,7 +87,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get("/userdemo", async(req, res) => {
+app.get("/userdemo", async (req, res) => {
     let fakeUser = new User({
         email: "kalpesh@gmail.com",
         username: "kalpesh-hadiya",
@@ -108,11 +108,11 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-    let {statusCode = 500, message = "something went wrong!"} = err;
-    res.status(statusCode).render("../views/error.ejs", {message});
+    let { statusCode = 500, message = "something went wrong!" } = err;
+    res.status(statusCode).render("../views/error.ejs", { message });
     // res.status(statusCode).send(message);
 });
 
-app.listen(8080, () =>{
+app.listen(8080, () => {
     console.log("server is listening in port 8080");
 });
