@@ -55,7 +55,7 @@ store.on("error", () => {
 
 const sessionOptions = {
     store,
-    secret: "mysuperkeys",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
